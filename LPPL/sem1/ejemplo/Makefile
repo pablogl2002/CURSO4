@@ -1,23 +1,25 @@
-###############################################################################
-###  Ejemplo de FLEX: S E M - 1           2023-2024 <jmbenedi@prhlt.upv.es> ###
-###############################################################################
+
+######################################################################
+###  SEMINARIO 1: PABLO GARCÍA LÓPEZ 4CO21 <pgarlop@etsinf.upv.es> ###
+######################################################################
+
 # Directorios de trabajo
 SRCDIR = src
 INCDIR = include
 # Opciones de compilacion
 COPT = -Wall
 CLIB = -lfl
-OBJS = ./alex.o  ./principal.o 
+OBJS = ./pablo.o  ./principal.o 
 #
 cmc:	$(OBJS)
 	gcc  $(OBJS)  -I$(INCDIR)  $(COPT)  $(CLIB) -o cmc
 principal.o: $(SRCDIR)/principal.c
 	gcc  -I$(INCDIR) $(COPT) -c $(SRCDIR)/principal.c
-alex.o:	alex.c 
-	gcc  -I$(INCDIR) $(COPT) -c alex.c
-alex.c:	$(SRCDIR)/alex.l 
-	flex -oalex.c $(SRCDIR)/alex.l 
+pablo.o:	pablo.c 
+	gcc  -I$(INCDIR) $(COPT) -c pablo.c
+pablo.c:	$(SRCDIR)/pablo.l 
+	flex -opablo.c $(SRCDIR)/pablo.l 
 
 clean:
-	rm -f ./alex.c ./*.o  
+	rm -f ./pablo.c ./*.o  
 ###############################################################################

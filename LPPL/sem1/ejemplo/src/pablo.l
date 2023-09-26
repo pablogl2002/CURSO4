@@ -1,6 +1,6 @@
-/*****************************************************************************/
-/**  Ejemplo de FLEX: S E M - 1           2023-2024 <jmbenedi@prhlt.upv.es> **/
-/*****************************************************************************/
+/*******************************************************************/
+/** SEMINARIO 1: PABLO GARCÍA LÓPEZ 4CO21 <pgarlop@etsinf.upv.es> **/
+/*******************************************************************/
 %{
 #include <stdio.h>
 #include <string.h>
@@ -16,13 +16,17 @@
 %option nounput       
 %option yylineno  
 
+letra          [a-zA-Z]
 delimitador    [ \t\n]+
 digito         [0-9]
 entero         {digito}+
+id             {letra}({letra}|{digito}|['_'])*
+bool           {'TRUE'|'FALSE'}
+
 
 %%
 {delimitador}  { if (verbosidad) ECHO; }
-"+"	       { retornar (MAS_);      }
+"+"	           { retornar (MAS_);      }
 "-"            { retornar (MENOS_);    }
 "*"            { retornar (POR_);      }
 "/"            { retornar (DIV_);      }
