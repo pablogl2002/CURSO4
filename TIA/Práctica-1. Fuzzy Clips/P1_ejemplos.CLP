@@ -22,12 +22,15 @@
     )
 )
 
+
 (deftemplate edad
     0 120 anyos
     ((infantil (12 1)(20 0))
     (joven (10 0)(15 1)(25 1)(30 0))
     (adulta (20 0)(30 1)(60 1)(70 0))
     (mayor (60 0)(70 1))))
+
+
 
 ;(plot-fuzzy-value t ".*+-" 1 90
 ;    (create-fuzzy-value edad infantil)
@@ -36,3 +39,14 @@
 ;    (create-fuzzy-value edad mayor)
 ;)
 
+; Ejemplo 1
+(deftemplate tanque 0 80 litros
+    ((bajo (10 1)(30 0))
+    (medio (20 0)(35 1)(45 1)(60 0))
+    (alto (50 0)(70 1))))
+
+(defrule danger
+    (tanque extremely alto)
+=>
+    (printout t "El tanque puede desbordarse. PELIGRO!" crlf)
+    (assert (alarma)))
