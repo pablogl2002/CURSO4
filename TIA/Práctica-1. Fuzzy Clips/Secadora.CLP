@@ -49,20 +49,39 @@
 (deftemplate secado
     (slot peso-crisp (type FLOAT))
     (slot humedad-crisp (type FLOAT))
-    (slot mom-temperatura-crisp (type FLOAT))
-    (slot max-temperatura-crisp (type FLOAT))
-    (slot mom-duracion-secado-crisp (type FLOAT))
-    (slot max-duracion-secado-crisp (type FLOAT))
+    (slot temperatura-crisp (type FLOAT))
+    (slot duracion-secado-crisp (type FLOAT))
 )
 
 (defrule leer_datos
     (initial-fact)
 =>
     (printout t "Introduzca el peso en kg" crlf)
-    (bind ?peso-crisp (read))
-    (fuzzify peso ?peso-crisp 0.1)
+    (bind ?pesoAux (read))
+    (fuzzify peso ?pesoAux 0.1)
     (printout t "Introduzca la humedad en %" crlf)
-    (bind ?humedad-crisp (read))
-    (fuzzify humedad ?humedad-crisp 0.1)
+    (bind ?humedadAux (read))
+    (fuzzify humedad ?humedadAux 0.1)
+    (assert (secado (peso-crisp ?pesoAux)(humedad-crisp ?humedadAux)))
 )
 
+(deffacts prueba
+    (secado (peso-crisp 2.0)(humedad-crisp 4.0))
+)
+
+(defrule bajo_seco
+    ?f <- (secado (peso-crisp bajo)(humedad-crisp seco))
+=>  
+    (modify ?f (temperatura-crisp extremely baja))
+    (modify ?f (duracion-secado-crisp extremely corta))
+)
+
+(defrule defuzzificar
+    ?f <- (secado (temperatura-crisp ?temp)(duracion-secado-crisp ?dSec))
+
+    =>
+    (printout T "Temperatura por moment: " (moment-defuzzify ?temp) crlf)
+    (printout T "Temperatura por maximum: " (maximum-defuzzify ?temp) crlf)
+    (printout T "Duracion de secado por moment: " (moment-defuzzify ?dSec) crlf)
+    (printout T "Duracion de secado por maximum: " (maximum-defuzzify ?dSec) crlf)
+)
