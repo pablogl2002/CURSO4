@@ -149,6 +149,7 @@
 
 
 (defrule defuzzificar-salida
+    (declare (salience -1))
     (temperatura ?t)
     (duracion-secado ?d)
     ?f <- (secado (mom-temperatura-crisp ?a)(mom-duracion-secado-crisp ?b)(max-temperatura-crisp ?c)(max-duracion-secado-crisp ?e))    
