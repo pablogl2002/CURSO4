@@ -17,38 +17,44 @@
 %option yylineno  
 
 letra           [a-zA-Z]
+esp_char        [^a-zA-Z0-9]
 delimitador     [ \t\n]+
 digito          [0-9]
 entero          {digito}+
-real            0.?{digito}*
+real            {digito}*"."{digito}+|{digito}+"."{digito}*
 id              {letra}({letra}|{digito}|['_'])*
-bool            {'TRUE'|'FALSE'}
-cte             {bool | entero | real}
+bool            TRUE|FALSE
+cte             {bool}|{entero}|{real}
+comentario      \/\/.*\n
 
 %%
 {delimitador}   { if (verbosidad) ECHO; }
+"++"            { retornar (INC_);      }
 "+"	            { retornar (MAS_);      }
+"--"            { retornar (DEC_);      }
 "-"             { retornar (MENOS_);    }
 "*"             { retornar (POR_);      }
 "/"             { retornar (DIV_);      }
 "("             { retornar (APAR_);     }
 ")"             { retornar (CPAR_);     }  
+"["             { retornar (ABREC_);    }
+"]"             { retornar (CIERRAC);   }
 {entero}        { retornar (CTE_);      }
 
 {id}            { retornar (ID_);       }
 {real}          { retornar (DOUBLE_);   }
 {bool}          { retornar (BOOL_);     }
 
+
+"=="            { retornar (IG_);       }
+"="             { retornar (ASI_);      }
 "&&"            { retornar (AND_);      }
 "||"            { retornar (OR_);       }
-"=="            { retornar (IG_);       }
 "!="            { retornar (DIF_);      }
+"<="            { retornar (MENIG_);    }
+">="            { retornar (MAYIG_);    }
 ">"             { retornar (MAYOR_);    }
 "<"             { retornar (MENOR_);    }
-">="            { retornar (MAYIG_);    }
-"<="            { retornar (MENIG_);    }
-"++"            { retornar (INC_);      }
-"--"            { retornar (DEC_);      }
 "!"             { retornar (NOT_);      }
 
 "if"            { retornar (IF_);       }
@@ -60,6 +66,7 @@ cte             {bool | entero | real}
 "print"         { retornar (PRINT_);    }
 "return"        { retornar (RETURN_);   }
 
+{esp_char}      { retornar (ESP_);      }
 .	              { yyerror("Caracter desconocido"); }
 
 %%
