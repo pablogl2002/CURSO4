@@ -17,7 +17,7 @@
 %option yylineno  
 
 letra           [a-zA-Z]
-esp_char        [^a-zA-Z0-9]
+esp_char        [^a-zA-Z0-9 ]
 delimitador     [ \t\n]+
 digito          [0-9]
 entero          {digito}+
@@ -37,14 +37,16 @@ comentario      \/\/.*\n
 "/"             { retornar (DIV_);      }
 "("             { retornar (APAR_);     }
 ")"             { retornar (CPAR_);     }  
-"["             { retornar (ABREC_);    }
-"]"             { retornar (CIERRAC);   }
-{entero}        { retornar (CTE_);      }
+"["             { retornar (ACOR_);     }
+"]"             { retornar (CCOR_);     }
+"{"             { retornar (ALLA);      }
+"}"             { retornar (CLLA);      }
+{entero}        { retornar (INT_);      }
+{cte}           { retornar (CTE_);      }
 
 {id}            { retornar (ID_);       }
 {real}          { retornar (DOUBLE_);   }
 {bool}          { retornar (BOOL_);     }
-
 
 "=="            { retornar (IG_);       }
 "="             { retornar (ASI_);      }
@@ -56,11 +58,17 @@ comentario      \/\/.*\n
 ">"             { retornar (MAYOR_);    }
 "<"             { retornar (MENOR_);    }
 "!"             { retornar (NOT_);      }
+";"             { retornar (PUNCOM_);   }
+","             { retornar (COMA_);     }
+"."             { retornar (PUNTO_);    }
 
 "if"            { retornar (IF_);       }
 "else"          { retornar (ELSE_);     }
 "for"           { retornar (FOR_);      }
 "while"         { retornar (WHILE_);    }
+"struct"        { retornar (STRUCT);    }
+"true"          { retornar (TRUE_);     }
+"false"         { retornar (FALSE_);    }
 
 "read"          { retornar (READ_);     }
 "print"         { retornar (PRINT_);    }

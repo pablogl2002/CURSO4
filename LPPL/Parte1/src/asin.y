@@ -1,6 +1,6 @@
-/*****************************************************************************/
-/** Ejemplo  S E M - 2                    2023-2024 <jmbenedi@prhlt.upv.es> **/
-/*****************************************************************************/
+/*******************************************************************/
+/** SEMINARIO 1: PABLO GARCÍA LÓPEZ 4CO21 <pgarlop@etsinf.upv.es> **/
+/*******************************************************************/
 %{
 #include <stdio.h>
 #include <string.h>
@@ -9,7 +9,9 @@
 
 %token  APAR_  CPAR_  MAS_  MENOS_  POR_  DIV_ STRUCT_
 %token  CTE_ ID_ INT_ PUNCOM_ ACOR_ CCOR_ ALLA_ CLLA_ BOOL_ 
-%token  RETURN_ COMA_ READ_ PRINT_
+%token  RETURN_ COMA_ READ_ PRINT_ IF_ ELSE_ WHILE_ ASI_ PUNTO_
+%token  TRUE_ FALSE_ AND_ OR_ IG_ DIF_ MAYOR_ MENOR_ MAYIG_ MENIG_
+%token  NOT_ INC_ DEC_
 
 %%
 
@@ -63,7 +65,7 @@ inst          : ALLA_ listInst CLLA_
               | instIter
               ;
 
-instExp       : expre PUNCOM_
+instExpre     : expre PUNCOM_
               | PUNCOM_
               ;
 
@@ -71,5 +73,94 @@ instEntSal    : READ_ APAR_ ID_ CPAR_ PUNCOM_
               | PRINT_ APAR_ expre CPAR_ PUNCOM_
               ;
 
+instSelec     : IF_ APAR_ expre CPAR_ inst ELSE_ inst
+              ;
+
+instIter      : WHILE_ APAR_ expre CPAR_ inst
+              ;
+
+expre         : expreLogic
+              | ID_ ASI_ expre
+              | ID_ ACOR_ expre CCOR_ ASI_ expre
+              | ID_ PUNTO_ ID_ ASI_ expre
+              ;
+
+expreLogic    : expreIgual
+              | expreLogic opLogic expreIgual
+              ;
+
+expreIgual    : expreRel
+              | expreIgual opIgual expreRel
+              ;
+
+expreRel      : expreAd
+              | expreRel opRel expreAd
+              ;
+
+expreAd       : expreMul 
+              | expreAd opAd expreMul
+              ;
+
+expreMul      : expreUna
+              | expreMul opMul expreUna
+              ;
+
+expreUna      : expreSufi
+              | opUna expreUna
+              | opIncre ID_
+              ;
+
+expreSufi     : const
+              | APAR_ expre CPAR_
+              | ID_
+              | ID_ opIncre
+              | ID_ PUNTO_ ID_
+              | ID_ ACOR_ expre CCOR_
+              | ID_ APAR_ paramAct CPAR_
+              ;
+
+const         : CTE_
+              | TRUE_
+              | FALSE_
+              ;
+
+paramAct      : /* epsilon */
+              | listParamAct
+              ;
+
+listParamAct  : expre
+              | expre COMA_ listParamAct
+              ;
+
+opLogic       : AND_
+              | OR_
+              ;
+
+opIgual       : IG_
+              | DIF_
+              ;
+        
+opRel         : MAYOR_
+              | MENOR_
+              | MAYIG_
+              | MENIG_
+              ;
+
+opAd          : MAS_
+              | MENOS_
+              ;
+
+opMul         : POR_
+              | DIV_
+              ;
+
+opUna         : MAS_
+              | MENOS_
+              | NOT_
+              ;
+
+opIncre       : INC_
+              | DEC_
+              ;
 
 %%

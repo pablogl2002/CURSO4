@@ -17,12 +17,12 @@
 %option yylineno  
 
 letra           [a-zA-Z]
-esp_char        [^a-zA-Z0-9 ]
+esp_char        [^a-zA-Z0-9]
 delimitador     [ \t\n]+
 digito          [0-9]
 entero          {digito}+
 real            {digito}*"."{digito}+|{digito}+"."{digito}*
-id              {letra}({letra}|{digito}|['_'])*
+id              {letra}({letra}|{digito}|"_")*
 bool            TRUE|FALSE
 cte             {bool}|{entero}|{real}
 comentario      \/\/.*\n
