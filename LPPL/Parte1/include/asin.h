@@ -91,7 +91,8 @@ extern int yydebug;
     MENIG_ = 292,                  /* MENIG_  */
     NOT_ = 293,                    /* NOT_  */
     INC_ = 294,                    /* INC_  */
-    DEC_ = 295                     /* DEC_  */
+    DEC_ = 295,                    /* DEC_  */
+    FOR_ = 296                     /* FOR_  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

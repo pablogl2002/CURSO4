@@ -73,7 +73,7 @@
 #include <string.h>
 #include "header.h"
 
-#line 77 "asin.c"
+#line 77 "asin.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -96,7 +96,82 @@
 #  endif
 # endif
 
-#include "asin.h"
+
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
+
+/* Token kinds.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    APAR_ = 258,                   /* APAR_  */
+    CPAR_ = 259,                   /* CPAR_  */
+    MAS_ = 260,                    /* MAS_  */
+    MENOS_ = 261,                  /* MENOS_  */
+    POR_ = 262,                    /* POR_  */
+    DIV_ = 263,                    /* DIV_  */
+    STRUCT_ = 264,                 /* STRUCT_  */
+    CTE_ = 265,                    /* CTE_  */
+    ID_ = 266,                     /* ID_  */
+    INT_ = 267,                    /* INT_  */
+    PUNCOM_ = 268,                 /* PUNCOM_  */
+    ACOR_ = 269,                   /* ACOR_  */
+    CCOR_ = 270,                   /* CCOR_  */
+    ALLA_ = 271,                   /* ALLA_  */
+    CLLA_ = 272,                   /* CLLA_  */
+    BOOL_ = 273,                   /* BOOL_  */
+    RETURN_ = 274,                 /* RETURN_  */
+    COMA_ = 275,                   /* COMA_  */
+    READ_ = 276,                   /* READ_  */
+    PRINT_ = 277,                  /* PRINT_  */
+    IF_ = 278,                     /* IF_  */
+    ELSE_ = 279,                   /* ELSE_  */
+    WHILE_ = 280,                  /* WHILE_  */
+    ASI_ = 281,                    /* ASI_  */
+    PUNTO_ = 282,                  /* PUNTO_  */
+    TRUE_ = 283,                   /* TRUE_  */
+    FALSE_ = 284,                  /* FALSE_  */
+    AND_ = 285,                    /* AND_  */
+    OR_ = 286,                     /* OR_  */
+    IG_ = 287,                     /* IG_  */
+    DIF_ = 288,                    /* DIF_  */
+    MAYOR_ = 289,                  /* MAYOR_  */
+    MENOR_ = 290,                  /* MENOR_  */
+    MAYIG_ = 291,                  /* MAYIG_  */
+    MENIG_ = 292,                  /* MENIG_  */
+    NOT_ = 293,                    /* NOT_  */
+    INC_ = 294,                    /* INC_  */
+    DEC_ = 295,                    /* DEC_  */
+    FOR_ = 296                     /* FOR_  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
+#endif
+
+/* Value type.  */
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef int YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
+#endif
+
+
+extern YYSTYPE yylval;
+
+
+int yyparse (void);
+
+
+
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1245,7 +1320,7 @@ yyreduce:
   switch (yyn)
     {
 
-#line 1249 "asin.c"
+#line 1324 "asin.tab.c"
 
       default: break;
     }

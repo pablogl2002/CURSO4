@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "header.h"
+#include "asin.h"
 
-#define  retornar(x) {if (verbosidad) ECHO; }
+#define  retornar(x) {if (verbosidad) ECHO; return(x); }
 %}
 /*-----------------------------------------------------------------------------
   Estas opciones evitan "warnings" innecesarios y permiten obtener el
@@ -17,18 +18,16 @@
 %option yylineno  
 
 letra           [a-zA-Z]
-esp_char        [^a-zA-Z0-9]
 delimitador     [ \t\n]+
 digito          [0-9]
 entero          {digito}+
-real            {digito}*"."{digito}+|{digito}+"."{digito}*
-id              {letra}({letra}|{digito}|"_")*
-bool            TRUE|FALSE
-cte             {bool}|{entero}|{real}
+id              [a-zA-Z][a-zA-Z0-9]*
+cte             {entero}|{digito}*"."{digito}+|{digito}+"."{digito}*
 comentario      \/\/.*\n
 
 %%
 {delimitador}   { if (verbosidad) ECHO; }
+{comentario}    { if (verbosidad) ECHO; }
 "++"            { retornar (INC_);      }
 "+"	            { retornar (MAS_);      }
 "--"            { retornar (DEC_);      }
@@ -39,14 +38,10 @@ comentario      \/\/.*\n
 ")"             { retornar (CPAR_);     }  
 "["             { retornar (ACOR_);     }
 "]"             { retornar (CCOR_);     }
-"{"             { retornar (ALLA);      }
-"}"             { retornar (CLLA);      }
-{entero}        { retornar (INT_);      }
-{cte}           { retornar (CTE_);      }
+"{"             { retornar (ALLA_);     }
+"}"             { retornar (CLLA_);     }
 
-{id}            { retornar (ID_);       }
-{real}          { retornar (DOUBLE_);   }
-{bool}          { retornar (BOOL_);     }
+{cte}           { retornar (CTE_);      }
 
 "=="            { retornar (IG_);       }
 "="             { retornar (ASI_);      }
@@ -60,20 +55,23 @@ comentario      \/\/.*\n
 "!"             { retornar (NOT_);      }
 ";"             { retornar (PUNCOM_);   }
 ","             { retornar (COMA_);     }
+"."             { retornar (PUNTO_);    }
 
-"if"            { retornar (IF_);       }
-"else"          { retornar (ELSE_);     }
-"for"           { retornar (FOR_);      }
-"while"         { retornar (WHILE_);    }
-"struct"        { retornar (STRUCT);    }
-"true"          { retornar (TRUE_);     }
-"false"         { retornar (FALSE_);    }
+int             { retornar (INT_);      }
+if              { retornar (IF_);       }
+else            { retornar (ELSE_);     }
+for             { retornar (FOR_);      }
+while           { retornar (WHILE_);    }
+struct          { retornar (STRUCT_);   }
+true            { retornar (TRUE_);     }
+false           { retornar (FALSE_);    }
+read            { retornar (READ_);     }
+print           { retornar (PRINT_);    }
+return          { retornar (RETURN_);   }
+bool            { retornar (BOOL_);     }
 
-"read"          { retornar (READ_);     }
-"print"         { retornar (PRINT_);    }
-"return"        { retornar (RETURN_);   }
+{id}            { retornar (ID_);       }
 
-{esp_char}      { retornar (ESP_);      }
 .	              { yyerror("Caracter desconocido"); }
 
 %%

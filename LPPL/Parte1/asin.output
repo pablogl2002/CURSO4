@@ -1,0 +1,2016 @@
+Terminals unused in grammar
+
+    FOR_
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 programa: listDecla
+
+    2 listDecla: decla
+    3          | listDecla decla
+
+    4 decla: declaVar
+    5      | declaFunc
+
+    6 declaVar: tipoSimp ID_ PUNCOM_
+    7         | tipoSimp ID_ ACOR_ CTE_ CCOR_ PUNCOM_
+    8         | STRUCT_ ALLA_ listaCamp CLLA_ ID_ PUNCOM_
+
+    9 tipoSimp: INT_
+   10         | BOOL_
+
+   11 listaCamp: tipoSimp ID_ PUNCOM_
+   12          | listaCamp tipoSimp ID_ PUNCOM_
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_
+
+   14 paramForm: ε
+   15          | listParamForm
+
+   16 listParamForm: tipoSimp ID_
+   17              | tipoSimp ID_ COMA_ listParamForm
+
+   18 declaVarLocal: ε
+   19              | declaVarLocal declaVar
+
+   20 listInst: ε
+   21         | listInst inst
+
+   22 inst: ALLA_ listInst CLLA_
+   23     | instExpre
+   24     | instEntSal
+   25     | instSelec
+   26     | instIter
+
+   27 instExpre: expre PUNCOM_
+   28          | PUNCOM_
+
+   29 instEntSal: READ_ APAR_ ID_ CPAR_ PUNCOM_
+   30           | PRINT_ APAR_ expre CPAR_ PUNCOM_
+
+   31 instSelec: IF_ APAR_ expre CPAR_ inst ELSE_ inst
+
+   32 instIter: WHILE_ APAR_ expre CPAR_ inst
+
+   33 expre: expreLogic
+   34      | ID_ ASI_ expre
+   35      | ID_ ACOR_ expre CCOR_ ASI_ expre
+   36      | ID_ PUNTO_ ID_ ASI_ expre
+
+   37 expreLogic: expreIgual
+   38           | expreLogic opLogic expreIgual
+
+   39 expreIgual: expreRel
+   40           | expreIgual opIgual expreRel
+
+   41 expreRel: expreAd
+   42         | expreRel opRel expreAd
+
+   43 expreAd: expreMul
+   44        | expreAd opAd expreMul
+
+   45 expreMul: expreUna
+   46         | expreMul opMul expreUna
+
+   47 expreUna: expreSufi
+   48         | opUna expreUna
+   49         | opIncre ID_
+
+   50 expreSufi: const
+   51          | APAR_ expre CPAR_
+   52          | ID_
+   53          | ID_ opIncre
+   54          | ID_ PUNTO_ ID_
+   55          | ID_ ACOR_ expre CCOR_
+   56          | ID_ APAR_ paramAct CPAR_
+
+   57 const: CTE_
+   58      | TRUE_
+   59      | FALSE_
+
+   60 paramAct: ε
+   61         | listParamAct
+
+   62 listParamAct: expre
+   63             | expre COMA_ listParamAct
+
+   64 opLogic: AND_
+   65        | OR_
+
+   66 opIgual: IG_
+   67        | DIF_
+
+   68 opRel: MAYOR_
+   69      | MENOR_
+   70      | MAYIG_
+   71      | MENIG_
+
+   72 opAd: MAS_
+   73     | MENOS_
+
+   74 opMul: POR_
+   75      | DIV_
+
+   76 opUna: MAS_
+   77      | MENOS_
+   78      | NOT_
+
+   79 opIncre: INC_
+   80        | DEC_
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    APAR_ (258) 13 29 30 31 32 51 56
+    CPAR_ (259) 13 29 30 31 32 51 56
+    MAS_ (260) 72 76
+    MENOS_ (261) 73 77
+    POR_ (262) 74
+    DIV_ (263) 75
+    STRUCT_ (264) 8
+    CTE_ (265) 7 57
+    ID_ (266) 6 7 8 11 12 13 16 17 29 34 35 36 49 52 53 54 55 56
+    INT_ (267) 9
+    PUNCOM_ (268) 6 7 8 11 12 13 27 28 29 30
+    ACOR_ (269) 7 35 55
+    CCOR_ (270) 7 35 55
+    ALLA_ (271) 8 13 22
+    CLLA_ (272) 8 13 22
+    BOOL_ (273) 10
+    RETURN_ (274) 13
+    COMA_ (275) 17 63
+    READ_ (276) 29
+    PRINT_ (277) 30
+    IF_ (278) 31
+    ELSE_ (279) 31
+    WHILE_ (280) 32
+    ASI_ (281) 34 35 36
+    PUNTO_ (282) 36 54
+    TRUE_ (283) 58
+    FALSE_ (284) 59
+    AND_ (285) 64
+    OR_ (286) 65
+    IG_ (287) 66
+    DIF_ (288) 67
+    MAYOR_ (289) 68
+    MENOR_ (290) 69
+    MAYIG_ (291) 70
+    MENIG_ (292) 71
+    NOT_ (293) 78
+    INC_ (294) 79
+    DEC_ (295) 80
+    FOR_ (296)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (42)
+        on left: 0
+    programa (43)
+        on left: 1
+        on right: 0
+    listDecla (44)
+        on left: 2 3
+        on right: 1 3
+    decla (45)
+        on left: 4 5
+        on right: 2 3
+    declaVar (46)
+        on left: 6 7 8
+        on right: 4 19
+    tipoSimp (47)
+        on left: 9 10
+        on right: 6 7 11 12 13 16 17
+    listaCamp (48)
+        on left: 11 12
+        on right: 8 12
+    declaFunc (49)
+        on left: 13
+        on right: 5
+    paramForm (50)
+        on left: 14 15
+        on right: 13
+    listParamForm (51)
+        on left: 16 17
+        on right: 15 17
+    declaVarLocal (52)
+        on left: 18 19
+        on right: 13 19
+    listInst (53)
+        on left: 20 21
+        on right: 13 21 22
+    inst (54)
+        on left: 22 23 24 25 26
+        on right: 21 31 32
+    instExpre (55)
+        on left: 27 28
+        on right: 23
+    instEntSal (56)
+        on left: 29 30
+        on right: 24
+    instSelec (57)
+        on left: 31
+        on right: 25
+    instIter (58)
+        on left: 32
+        on right: 26
+    expre (59)
+        on left: 33 34 35 36
+        on right: 13 27 30 31 32 34 35 36 51 55 62 63
+    expreLogic (60)
+        on left: 37 38
+        on right: 33 38
+    expreIgual (61)
+        on left: 39 40
+        on right: 37 38 40
+    expreRel (62)
+        on left: 41 42
+        on right: 39 40 42
+    expreAd (63)
+        on left: 43 44
+        on right: 41 42 44
+    expreMul (64)
+        on left: 45 46
+        on right: 43 44 46
+    expreUna (65)
+        on left: 47 48 49
+        on right: 45 46 48
+    expreSufi (66)
+        on left: 50 51 52 53 54 55 56
+        on right: 47
+    const (67)
+        on left: 57 58 59
+        on right: 50
+    paramAct (68)
+        on left: 60 61
+        on right: 56
+    listParamAct (69)
+        on left: 62 63
+        on right: 61 63
+    opLogic (70)
+        on left: 64 65
+        on right: 38
+    opIgual (71)
+        on left: 66 67
+        on right: 40
+    opRel (72)
+        on left: 68 69 70 71
+        on right: 42
+    opAd (73)
+        on left: 72 73
+        on right: 44
+    opMul (74)
+        on left: 74 75
+        on right: 46
+    opUna (75)
+        on left: 76 77 78
+        on right: 48
+    opIncre (76)
+        on left: 79 80
+        on right: 49 53
+
+
+State 0
+
+    0 $accept: • programa $end
+
+    STRUCT_  shift, and go to state 1
+    INT_     shift, and go to state 2
+    BOOL_    shift, and go to state 3
+
+    programa   go to state 4
+    listDecla  go to state 5
+    decla      go to state 6
+    declaVar   go to state 7
+    tipoSimp   go to state 8
+    declaFunc  go to state 9
+
+
+State 1
+
+    8 declaVar: STRUCT_ • ALLA_ listaCamp CLLA_ ID_ PUNCOM_
+
+    ALLA_  shift, and go to state 10
+
+
+State 2
+
+    9 tipoSimp: INT_ •
+
+    $default  reduce using rule 9 (tipoSimp)
+
+
+State 3
+
+   10 tipoSimp: BOOL_ •
+
+    $default  reduce using rule 10 (tipoSimp)
+
+
+State 4
+
+    0 $accept: programa • $end
+
+    $end  shift, and go to state 11
+
+
+State 5
+
+    1 programa: listDecla •
+    3 listDecla: listDecla • decla
+
+    STRUCT_  shift, and go to state 1
+    INT_     shift, and go to state 2
+    BOOL_    shift, and go to state 3
+
+    $default  reduce using rule 1 (programa)
+
+    decla      go to state 12
+    declaVar   go to state 7
+    tipoSimp   go to state 8
+    declaFunc  go to state 9
+
+
+State 6
+
+    2 listDecla: decla •
+
+    $default  reduce using rule 2 (listDecla)
+
+
+State 7
+
+    4 decla: declaVar •
+
+    $default  reduce using rule 4 (decla)
+
+
+State 8
+
+    6 declaVar: tipoSimp • ID_ PUNCOM_
+    7         | tipoSimp • ID_ ACOR_ CTE_ CCOR_ PUNCOM_
+   13 declaFunc: tipoSimp • ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_
+
+    ID_  shift, and go to state 13
+
+
+State 9
+
+    5 decla: declaFunc •
+
+    $default  reduce using rule 5 (decla)
+
+
+State 10
+
+    8 declaVar: STRUCT_ ALLA_ • listaCamp CLLA_ ID_ PUNCOM_
+
+    INT_   shift, and go to state 2
+    BOOL_  shift, and go to state 3
+
+    tipoSimp   go to state 14
+    listaCamp  go to state 15
+
+
+State 11
+
+    0 $accept: programa $end •
+
+    $default  accept
+
+
+State 12
+
+    3 listDecla: listDecla decla •
+
+    $default  reduce using rule 3 (listDecla)
+
+
+State 13
+
+    6 declaVar: tipoSimp ID_ • PUNCOM_
+    7         | tipoSimp ID_ • ACOR_ CTE_ CCOR_ PUNCOM_
+   13 declaFunc: tipoSimp ID_ • APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_
+
+    APAR_    shift, and go to state 16
+    PUNCOM_  shift, and go to state 17
+    ACOR_    shift, and go to state 18
+
+
+State 14
+
+   11 listaCamp: tipoSimp • ID_ PUNCOM_
+
+    ID_  shift, and go to state 19
+
+
+State 15
+
+    8 declaVar: STRUCT_ ALLA_ listaCamp • CLLA_ ID_ PUNCOM_
+   12 listaCamp: listaCamp • tipoSimp ID_ PUNCOM_
+
+    INT_   shift, and go to state 2
+    CLLA_  shift, and go to state 20
+    BOOL_  shift, and go to state 3
+
+    tipoSimp  go to state 21
+
+
+State 16
+
+   13 declaFunc: tipoSimp ID_ APAR_ • paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_
+
+    INT_   shift, and go to state 2
+    BOOL_  shift, and go to state 3
+
+    $default  reduce using rule 14 (paramForm)
+
+    tipoSimp       go to state 22
+    paramForm      go to state 23
+    listParamForm  go to state 24
+
+
+State 17
+
+    6 declaVar: tipoSimp ID_ PUNCOM_ •
+
+    $default  reduce using rule 6 (declaVar)
+
+
+State 18
+
+    7 declaVar: tipoSimp ID_ ACOR_ • CTE_ CCOR_ PUNCOM_
+
+    CTE_  shift, and go to state 25
+
+
+State 19
+
+   11 listaCamp: tipoSimp ID_ • PUNCOM_
+
+    PUNCOM_  shift, and go to state 26
+
+
+State 20
+
+    8 declaVar: STRUCT_ ALLA_ listaCamp CLLA_ • ID_ PUNCOM_
+
+    ID_  shift, and go to state 27
+
+
+State 21
+
+   12 listaCamp: listaCamp tipoSimp • ID_ PUNCOM_
+
+    ID_  shift, and go to state 28
+
+
+State 22
+
+   16 listParamForm: tipoSimp • ID_
+   17              | tipoSimp • ID_ COMA_ listParamForm
+
+    ID_  shift, and go to state 29
+
+
+State 23
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm • CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_
+
+    CPAR_  shift, and go to state 30
+
+
+State 24
+
+   15 paramForm: listParamForm •
+
+    $default  reduce using rule 15 (paramForm)
+
+
+State 25
+
+    7 declaVar: tipoSimp ID_ ACOR_ CTE_ • CCOR_ PUNCOM_
+
+    CCOR_  shift, and go to state 31
+
+
+State 26
+
+   11 listaCamp: tipoSimp ID_ PUNCOM_ •
+
+    $default  reduce using rule 11 (listaCamp)
+
+
+State 27
+
+    8 declaVar: STRUCT_ ALLA_ listaCamp CLLA_ ID_ • PUNCOM_
+
+    PUNCOM_  shift, and go to state 32
+
+
+State 28
+
+   12 listaCamp: listaCamp tipoSimp ID_ • PUNCOM_
+
+    PUNCOM_  shift, and go to state 33
+
+
+State 29
+
+   16 listParamForm: tipoSimp ID_ •
+   17              | tipoSimp ID_ • COMA_ listParamForm
+
+    COMA_  shift, and go to state 34
+
+    $default  reduce using rule 16 (listParamForm)
+
+
+State 30
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ • ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_
+
+    ALLA_  shift, and go to state 35
+
+
+State 31
+
+    7 declaVar: tipoSimp ID_ ACOR_ CTE_ CCOR_ • PUNCOM_
+
+    PUNCOM_  shift, and go to state 36
+
+
+State 32
+
+    8 declaVar: STRUCT_ ALLA_ listaCamp CLLA_ ID_ PUNCOM_ •
+
+    $default  reduce using rule 8 (declaVar)
+
+
+State 33
+
+   12 listaCamp: listaCamp tipoSimp ID_ PUNCOM_ •
+
+    $default  reduce using rule 12 (listaCamp)
+
+
+State 34
+
+   17 listParamForm: tipoSimp ID_ COMA_ • listParamForm
+
+    INT_   shift, and go to state 2
+    BOOL_  shift, and go to state 3
+
+    tipoSimp       go to state 22
+    listParamForm  go to state 37
+
+
+State 35
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ • declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_
+
+    $default  reduce using rule 18 (declaVarLocal)
+
+    declaVarLocal  go to state 38
+
+
+State 36
+
+    7 declaVar: tipoSimp ID_ ACOR_ CTE_ CCOR_ PUNCOM_ •
+
+    $default  reduce using rule 7 (declaVar)
+
+
+State 37
+
+   17 listParamForm: tipoSimp ID_ COMA_ listParamForm •
+
+    $default  reduce using rule 17 (listParamForm)
+
+
+State 38
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal • listInst RETURN_ expre PUNCOM_ CLLA_
+   19 declaVarLocal: declaVarLocal • declaVar
+
+    STRUCT_  shift, and go to state 1
+    INT_     shift, and go to state 2
+    BOOL_    shift, and go to state 3
+
+    $default  reduce using rule 20 (listInst)
+
+    declaVar  go to state 39
+    tipoSimp  go to state 40
+    listInst  go to state 41
+
+
+State 39
+
+   19 declaVarLocal: declaVarLocal declaVar •
+
+    $default  reduce using rule 19 (declaVarLocal)
+
+
+State 40
+
+    6 declaVar: tipoSimp • ID_ PUNCOM_
+    7         | tipoSimp • ID_ ACOR_ CTE_ CCOR_ PUNCOM_
+
+    ID_  shift, and go to state 42
+
+
+State 41
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst • RETURN_ expre PUNCOM_ CLLA_
+   21 listInst: listInst • inst
+
+    APAR_    shift, and go to state 43
+    MAS_     shift, and go to state 44
+    MENOS_   shift, and go to state 45
+    CTE_     shift, and go to state 46
+    ID_      shift, and go to state 47
+    PUNCOM_  shift, and go to state 48
+    ALLA_    shift, and go to state 49
+    RETURN_  shift, and go to state 50
+    READ_    shift, and go to state 51
+    PRINT_   shift, and go to state 52
+    IF_      shift, and go to state 53
+    WHILE_   shift, and go to state 54
+    TRUE_    shift, and go to state 55
+    FALSE_   shift, and go to state 56
+    NOT_     shift, and go to state 57
+    INC_     shift, and go to state 58
+    DEC_     shift, and go to state 59
+
+    inst        go to state 60
+    instExpre   go to state 61
+    instEntSal  go to state 62
+    instSelec   go to state 63
+    instIter    go to state 64
+    expre       go to state 65
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 42
+
+    6 declaVar: tipoSimp ID_ • PUNCOM_
+    7         | tipoSimp ID_ • ACOR_ CTE_ CCOR_ PUNCOM_
+
+    PUNCOM_  shift, and go to state 17
+    ACOR_    shift, and go to state 18
+
+
+State 43
+
+   51 expreSufi: APAR_ • expre CPAR_
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 76
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 44
+
+   76 opUna: MAS_ •
+
+    $default  reduce using rule 76 (opUna)
+
+
+State 45
+
+   77 opUna: MENOS_ •
+
+    $default  reduce using rule 77 (opUna)
+
+
+State 46
+
+   57 const: CTE_ •
+
+    $default  reduce using rule 57 (const)
+
+
+State 47
+
+   34 expre: ID_ • ASI_ expre
+   35      | ID_ • ACOR_ expre CCOR_ ASI_ expre
+   36      | ID_ • PUNTO_ ID_ ASI_ expre
+   52 expreSufi: ID_ •
+   53          | ID_ • opIncre
+   54          | ID_ • PUNTO_ ID_
+   55          | ID_ • ACOR_ expre CCOR_
+   56          | ID_ • APAR_ paramAct CPAR_
+
+    APAR_   shift, and go to state 77
+    ACOR_   shift, and go to state 78
+    ASI_    shift, and go to state 79
+    PUNTO_  shift, and go to state 80
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    $default  reduce using rule 52 (expreSufi)
+
+    opIncre  go to state 81
+
+
+State 48
+
+   28 instExpre: PUNCOM_ •
+
+    $default  reduce using rule 28 (instExpre)
+
+
+State 49
+
+   22 inst: ALLA_ • listInst CLLA_
+
+    $default  reduce using rule 20 (listInst)
+
+    listInst  go to state 82
+
+
+State 50
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ • expre PUNCOM_ CLLA_
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 83
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 51
+
+   29 instEntSal: READ_ • APAR_ ID_ CPAR_ PUNCOM_
+
+    APAR_  shift, and go to state 84
+
+
+State 52
+
+   30 instEntSal: PRINT_ • APAR_ expre CPAR_ PUNCOM_
+
+    APAR_  shift, and go to state 85
+
+
+State 53
+
+   31 instSelec: IF_ • APAR_ expre CPAR_ inst ELSE_ inst
+
+    APAR_  shift, and go to state 86
+
+
+State 54
+
+   32 instIter: WHILE_ • APAR_ expre CPAR_ inst
+
+    APAR_  shift, and go to state 87
+
+
+State 55
+
+   58 const: TRUE_ •
+
+    $default  reduce using rule 58 (const)
+
+
+State 56
+
+   59 const: FALSE_ •
+
+    $default  reduce using rule 59 (const)
+
+
+State 57
+
+   78 opUna: NOT_ •
+
+    $default  reduce using rule 78 (opUna)
+
+
+State 58
+
+   79 opIncre: INC_ •
+
+    $default  reduce using rule 79 (opIncre)
+
+
+State 59
+
+   80 opIncre: DEC_ •
+
+    $default  reduce using rule 80 (opIncre)
+
+
+State 60
+
+   21 listInst: listInst inst •
+
+    $default  reduce using rule 21 (listInst)
+
+
+State 61
+
+   23 inst: instExpre •
+
+    $default  reduce using rule 23 (inst)
+
+
+State 62
+
+   24 inst: instEntSal •
+
+    $default  reduce using rule 24 (inst)
+
+
+State 63
+
+   25 inst: instSelec •
+
+    $default  reduce using rule 25 (inst)
+
+
+State 64
+
+   26 inst: instIter •
+
+    $default  reduce using rule 26 (inst)
+
+
+State 65
+
+   27 instExpre: expre • PUNCOM_
+
+    PUNCOM_  shift, and go to state 88
+
+
+State 66
+
+   33 expre: expreLogic •
+   38 expreLogic: expreLogic • opLogic expreIgual
+
+    AND_  shift, and go to state 89
+    OR_   shift, and go to state 90
+
+    $default  reduce using rule 33 (expre)
+
+    opLogic  go to state 91
+
+
+State 67
+
+   37 expreLogic: expreIgual •
+   40 expreIgual: expreIgual • opIgual expreRel
+
+    IG_   shift, and go to state 92
+    DIF_  shift, and go to state 93
+
+    $default  reduce using rule 37 (expreLogic)
+
+    opIgual  go to state 94
+
+
+State 68
+
+   39 expreIgual: expreRel •
+   42 expreRel: expreRel • opRel expreAd
+
+    MAYOR_  shift, and go to state 95
+    MENOR_  shift, and go to state 96
+    MAYIG_  shift, and go to state 97
+    MENIG_  shift, and go to state 98
+
+    $default  reduce using rule 39 (expreIgual)
+
+    opRel  go to state 99
+
+
+State 69
+
+   41 expreRel: expreAd •
+   44 expreAd: expreAd • opAd expreMul
+
+    MAS_    shift, and go to state 100
+    MENOS_  shift, and go to state 101
+
+    $default  reduce using rule 41 (expreRel)
+
+    opAd  go to state 102
+
+
+State 70
+
+   43 expreAd: expreMul •
+   46 expreMul: expreMul • opMul expreUna
+
+    POR_  shift, and go to state 103
+    DIV_  shift, and go to state 104
+
+    $default  reduce using rule 43 (expreAd)
+
+    opMul  go to state 105
+
+
+State 71
+
+   45 expreMul: expreUna •
+
+    $default  reduce using rule 45 (expreMul)
+
+
+State 72
+
+   47 expreUna: expreSufi •
+
+    $default  reduce using rule 47 (expreUna)
+
+
+State 73
+
+   50 expreSufi: const •
+
+    $default  reduce using rule 50 (expreSufi)
+
+
+State 74
+
+   48 expreUna: opUna • expreUna
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 106
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expreUna   go to state 107
+    expreSufi  go to state 72
+    const      go to state 73
+    opUna      go to state 74
+    opIncre    go to state 75
+
+
+State 75
+
+   49 expreUna: opIncre • ID_
+
+    ID_  shift, and go to state 108
+
+
+State 76
+
+   51 expreSufi: APAR_ expre • CPAR_
+
+    CPAR_  shift, and go to state 109
+
+
+State 77
+
+   56 expreSufi: ID_ APAR_ • paramAct CPAR_
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    $default  reduce using rule 60 (paramAct)
+
+    expre         go to state 110
+    expreLogic    go to state 66
+    expreIgual    go to state 67
+    expreRel      go to state 68
+    expreAd       go to state 69
+    expreMul      go to state 70
+    expreUna      go to state 71
+    expreSufi     go to state 72
+    const         go to state 73
+    paramAct      go to state 111
+    listParamAct  go to state 112
+    opUna         go to state 74
+    opIncre       go to state 75
+
+
+State 78
+
+   35 expre: ID_ ACOR_ • expre CCOR_ ASI_ expre
+   55 expreSufi: ID_ ACOR_ • expre CCOR_
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 113
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 79
+
+   34 expre: ID_ ASI_ • expre
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 114
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 80
+
+   36 expre: ID_ PUNTO_ • ID_ ASI_ expre
+   54 expreSufi: ID_ PUNTO_ • ID_
+
+    ID_  shift, and go to state 115
+
+
+State 81
+
+   53 expreSufi: ID_ opIncre •
+
+    $default  reduce using rule 53 (expreSufi)
+
+
+State 82
+
+   21 listInst: listInst • inst
+   22 inst: ALLA_ listInst • CLLA_
+
+    APAR_    shift, and go to state 43
+    MAS_     shift, and go to state 44
+    MENOS_   shift, and go to state 45
+    CTE_     shift, and go to state 46
+    ID_      shift, and go to state 47
+    PUNCOM_  shift, and go to state 48
+    ALLA_    shift, and go to state 49
+    CLLA_    shift, and go to state 116
+    READ_    shift, and go to state 51
+    PRINT_   shift, and go to state 52
+    IF_      shift, and go to state 53
+    WHILE_   shift, and go to state 54
+    TRUE_    shift, and go to state 55
+    FALSE_   shift, and go to state 56
+    NOT_     shift, and go to state 57
+    INC_     shift, and go to state 58
+    DEC_     shift, and go to state 59
+
+    inst        go to state 60
+    instExpre   go to state 61
+    instEntSal  go to state 62
+    instSelec   go to state 63
+    instIter    go to state 64
+    expre       go to state 65
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 83
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre • PUNCOM_ CLLA_
+
+    PUNCOM_  shift, and go to state 117
+
+
+State 84
+
+   29 instEntSal: READ_ APAR_ • ID_ CPAR_ PUNCOM_
+
+    ID_  shift, and go to state 118
+
+
+State 85
+
+   30 instEntSal: PRINT_ APAR_ • expre CPAR_ PUNCOM_
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 119
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 86
+
+   31 instSelec: IF_ APAR_ • expre CPAR_ inst ELSE_ inst
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 120
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 87
+
+   32 instIter: WHILE_ APAR_ • expre CPAR_ inst
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 121
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 88
+
+   27 instExpre: expre PUNCOM_ •
+
+    $default  reduce using rule 27 (instExpre)
+
+
+State 89
+
+   64 opLogic: AND_ •
+
+    $default  reduce using rule 64 (opLogic)
+
+
+State 90
+
+   65 opLogic: OR_ •
+
+    $default  reduce using rule 65 (opLogic)
+
+
+State 91
+
+   38 expreLogic: expreLogic opLogic • expreIgual
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 106
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expreIgual  go to state 122
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 92
+
+   66 opIgual: IG_ •
+
+    $default  reduce using rule 66 (opIgual)
+
+
+State 93
+
+   67 opIgual: DIF_ •
+
+    $default  reduce using rule 67 (opIgual)
+
+
+State 94
+
+   40 expreIgual: expreIgual opIgual • expreRel
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 106
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expreRel   go to state 123
+    expreAd    go to state 69
+    expreMul   go to state 70
+    expreUna   go to state 71
+    expreSufi  go to state 72
+    const      go to state 73
+    opUna      go to state 74
+    opIncre    go to state 75
+
+
+State 95
+
+   68 opRel: MAYOR_ •
+
+    $default  reduce using rule 68 (opRel)
+
+
+State 96
+
+   69 opRel: MENOR_ •
+
+    $default  reduce using rule 69 (opRel)
+
+
+State 97
+
+   70 opRel: MAYIG_ •
+
+    $default  reduce using rule 70 (opRel)
+
+
+State 98
+
+   71 opRel: MENIG_ •
+
+    $default  reduce using rule 71 (opRel)
+
+
+State 99
+
+   42 expreRel: expreRel opRel • expreAd
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 106
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expreAd    go to state 124
+    expreMul   go to state 70
+    expreUna   go to state 71
+    expreSufi  go to state 72
+    const      go to state 73
+    opUna      go to state 74
+    opIncre    go to state 75
+
+
+State 100
+
+   72 opAd: MAS_ •
+
+    $default  reduce using rule 72 (opAd)
+
+
+State 101
+
+   73 opAd: MENOS_ •
+
+    $default  reduce using rule 73 (opAd)
+
+
+State 102
+
+   44 expreAd: expreAd opAd • expreMul
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 106
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expreMul   go to state 125
+    expreUna   go to state 71
+    expreSufi  go to state 72
+    const      go to state 73
+    opUna      go to state 74
+    opIncre    go to state 75
+
+
+State 103
+
+   74 opMul: POR_ •
+
+    $default  reduce using rule 74 (opMul)
+
+
+State 104
+
+   75 opMul: DIV_ •
+
+    $default  reduce using rule 75 (opMul)
+
+
+State 105
+
+   46 expreMul: expreMul opMul • expreUna
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 106
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expreUna   go to state 126
+    expreSufi  go to state 72
+    const      go to state 73
+    opUna      go to state 74
+    opIncre    go to state 75
+
+
+State 106
+
+   52 expreSufi: ID_ •
+   53          | ID_ • opIncre
+   54          | ID_ • PUNTO_ ID_
+   55          | ID_ • ACOR_ expre CCOR_
+   56          | ID_ • APAR_ paramAct CPAR_
+
+    APAR_   shift, and go to state 77
+    ACOR_   shift, and go to state 127
+    PUNTO_  shift, and go to state 128
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    $default  reduce using rule 52 (expreSufi)
+
+    opIncre  go to state 81
+
+
+State 107
+
+   48 expreUna: opUna expreUna •
+
+    $default  reduce using rule 48 (expreUna)
+
+
+State 108
+
+   49 expreUna: opIncre ID_ •
+
+    $default  reduce using rule 49 (expreUna)
+
+
+State 109
+
+   51 expreSufi: APAR_ expre CPAR_ •
+
+    $default  reduce using rule 51 (expreSufi)
+
+
+State 110
+
+   62 listParamAct: expre •
+   63             | expre • COMA_ listParamAct
+
+    COMA_  shift, and go to state 129
+
+    $default  reduce using rule 62 (listParamAct)
+
+
+State 111
+
+   56 expreSufi: ID_ APAR_ paramAct • CPAR_
+
+    CPAR_  shift, and go to state 130
+
+
+State 112
+
+   61 paramAct: listParamAct •
+
+    $default  reduce using rule 61 (paramAct)
+
+
+State 113
+
+   35 expre: ID_ ACOR_ expre • CCOR_ ASI_ expre
+   55 expreSufi: ID_ ACOR_ expre • CCOR_
+
+    CCOR_  shift, and go to state 131
+
+
+State 114
+
+   34 expre: ID_ ASI_ expre •
+
+    $default  reduce using rule 34 (expre)
+
+
+State 115
+
+   36 expre: ID_ PUNTO_ ID_ • ASI_ expre
+   54 expreSufi: ID_ PUNTO_ ID_ •
+
+    ASI_  shift, and go to state 132
+
+    $default  reduce using rule 54 (expreSufi)
+
+
+State 116
+
+   22 inst: ALLA_ listInst CLLA_ •
+
+    $default  reduce using rule 22 (inst)
+
+
+State 117
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ • CLLA_
+
+    CLLA_  shift, and go to state 133
+
+
+State 118
+
+   29 instEntSal: READ_ APAR_ ID_ • CPAR_ PUNCOM_
+
+    CPAR_  shift, and go to state 134
+
+
+State 119
+
+   30 instEntSal: PRINT_ APAR_ expre • CPAR_ PUNCOM_
+
+    CPAR_  shift, and go to state 135
+
+
+State 120
+
+   31 instSelec: IF_ APAR_ expre • CPAR_ inst ELSE_ inst
+
+    CPAR_  shift, and go to state 136
+
+
+State 121
+
+   32 instIter: WHILE_ APAR_ expre • CPAR_ inst
+
+    CPAR_  shift, and go to state 137
+
+
+State 122
+
+   38 expreLogic: expreLogic opLogic expreIgual •
+   40 expreIgual: expreIgual • opIgual expreRel
+
+    IG_   shift, and go to state 92
+    DIF_  shift, and go to state 93
+
+    $default  reduce using rule 38 (expreLogic)
+
+    opIgual  go to state 94
+
+
+State 123
+
+   40 expreIgual: expreIgual opIgual expreRel •
+   42 expreRel: expreRel • opRel expreAd
+
+    MAYOR_  shift, and go to state 95
+    MENOR_  shift, and go to state 96
+    MAYIG_  shift, and go to state 97
+    MENIG_  shift, and go to state 98
+
+    $default  reduce using rule 40 (expreIgual)
+
+    opRel  go to state 99
+
+
+State 124
+
+   42 expreRel: expreRel opRel expreAd •
+   44 expreAd: expreAd • opAd expreMul
+
+    MAS_    shift, and go to state 100
+    MENOS_  shift, and go to state 101
+
+    $default  reduce using rule 42 (expreRel)
+
+    opAd  go to state 102
+
+
+State 125
+
+   44 expreAd: expreAd opAd expreMul •
+   46 expreMul: expreMul • opMul expreUna
+
+    POR_  shift, and go to state 103
+    DIV_  shift, and go to state 104
+
+    $default  reduce using rule 44 (expreAd)
+
+    opMul  go to state 105
+
+
+State 126
+
+   46 expreMul: expreMul opMul expreUna •
+
+    $default  reduce using rule 46 (expreMul)
+
+
+State 127
+
+   55 expreSufi: ID_ ACOR_ • expre CCOR_
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 138
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 128
+
+   54 expreSufi: ID_ PUNTO_ • ID_
+
+    ID_  shift, and go to state 139
+
+
+State 129
+
+   63 listParamAct: expre COMA_ • listParamAct
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre         go to state 110
+    expreLogic    go to state 66
+    expreIgual    go to state 67
+    expreRel      go to state 68
+    expreAd       go to state 69
+    expreMul      go to state 70
+    expreUna      go to state 71
+    expreSufi     go to state 72
+    const         go to state 73
+    listParamAct  go to state 140
+    opUna         go to state 74
+    opIncre       go to state 75
+
+
+State 130
+
+   56 expreSufi: ID_ APAR_ paramAct CPAR_ •
+
+    $default  reduce using rule 56 (expreSufi)
+
+
+State 131
+
+   35 expre: ID_ ACOR_ expre CCOR_ • ASI_ expre
+   55 expreSufi: ID_ ACOR_ expre CCOR_ •
+
+    ASI_  shift, and go to state 141
+
+    $default  reduce using rule 55 (expreSufi)
+
+
+State 132
+
+   36 expre: ID_ PUNTO_ ID_ ASI_ • expre
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 142
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 133
+
+   13 declaFunc: tipoSimp ID_ APAR_ paramForm CPAR_ ALLA_ declaVarLocal listInst RETURN_ expre PUNCOM_ CLLA_ •
+
+    $default  reduce using rule 13 (declaFunc)
+
+
+State 134
+
+   29 instEntSal: READ_ APAR_ ID_ CPAR_ • PUNCOM_
+
+    PUNCOM_  shift, and go to state 143
+
+
+State 135
+
+   30 instEntSal: PRINT_ APAR_ expre CPAR_ • PUNCOM_
+
+    PUNCOM_  shift, and go to state 144
+
+
+State 136
+
+   31 instSelec: IF_ APAR_ expre CPAR_ • inst ELSE_ inst
+
+    APAR_    shift, and go to state 43
+    MAS_     shift, and go to state 44
+    MENOS_   shift, and go to state 45
+    CTE_     shift, and go to state 46
+    ID_      shift, and go to state 47
+    PUNCOM_  shift, and go to state 48
+    ALLA_    shift, and go to state 49
+    READ_    shift, and go to state 51
+    PRINT_   shift, and go to state 52
+    IF_      shift, and go to state 53
+    WHILE_   shift, and go to state 54
+    TRUE_    shift, and go to state 55
+    FALSE_   shift, and go to state 56
+    NOT_     shift, and go to state 57
+    INC_     shift, and go to state 58
+    DEC_     shift, and go to state 59
+
+    inst        go to state 145
+    instExpre   go to state 61
+    instEntSal  go to state 62
+    instSelec   go to state 63
+    instIter    go to state 64
+    expre       go to state 65
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 137
+
+   32 instIter: WHILE_ APAR_ expre CPAR_ • inst
+
+    APAR_    shift, and go to state 43
+    MAS_     shift, and go to state 44
+    MENOS_   shift, and go to state 45
+    CTE_     shift, and go to state 46
+    ID_      shift, and go to state 47
+    PUNCOM_  shift, and go to state 48
+    ALLA_    shift, and go to state 49
+    READ_    shift, and go to state 51
+    PRINT_   shift, and go to state 52
+    IF_      shift, and go to state 53
+    WHILE_   shift, and go to state 54
+    TRUE_    shift, and go to state 55
+    FALSE_   shift, and go to state 56
+    NOT_     shift, and go to state 57
+    INC_     shift, and go to state 58
+    DEC_     shift, and go to state 59
+
+    inst        go to state 146
+    instExpre   go to state 61
+    instEntSal  go to state 62
+    instSelec   go to state 63
+    instIter    go to state 64
+    expre       go to state 65
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 138
+
+   55 expreSufi: ID_ ACOR_ expre • CCOR_
+
+    CCOR_  shift, and go to state 147
+
+
+State 139
+
+   54 expreSufi: ID_ PUNTO_ ID_ •
+
+    $default  reduce using rule 54 (expreSufi)
+
+
+State 140
+
+   63 listParamAct: expre COMA_ listParamAct •
+
+    $default  reduce using rule 63 (listParamAct)
+
+
+State 141
+
+   35 expre: ID_ ACOR_ expre CCOR_ ASI_ • expre
+
+    APAR_   shift, and go to state 43
+    MAS_    shift, and go to state 44
+    MENOS_  shift, and go to state 45
+    CTE_    shift, and go to state 46
+    ID_     shift, and go to state 47
+    TRUE_   shift, and go to state 55
+    FALSE_  shift, and go to state 56
+    NOT_    shift, and go to state 57
+    INC_    shift, and go to state 58
+    DEC_    shift, and go to state 59
+
+    expre       go to state 148
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 142
+
+   36 expre: ID_ PUNTO_ ID_ ASI_ expre •
+
+    $default  reduce using rule 36 (expre)
+
+
+State 143
+
+   29 instEntSal: READ_ APAR_ ID_ CPAR_ PUNCOM_ •
+
+    $default  reduce using rule 29 (instEntSal)
+
+
+State 144
+
+   30 instEntSal: PRINT_ APAR_ expre CPAR_ PUNCOM_ •
+
+    $default  reduce using rule 30 (instEntSal)
+
+
+State 145
+
+   31 instSelec: IF_ APAR_ expre CPAR_ inst • ELSE_ inst
+
+    ELSE_  shift, and go to state 149
+
+
+State 146
+
+   32 instIter: WHILE_ APAR_ expre CPAR_ inst •
+
+    $default  reduce using rule 32 (instIter)
+
+
+State 147
+
+   55 expreSufi: ID_ ACOR_ expre CCOR_ •
+
+    $default  reduce using rule 55 (expreSufi)
+
+
+State 148
+
+   35 expre: ID_ ACOR_ expre CCOR_ ASI_ expre •
+
+    $default  reduce using rule 35 (expre)
+
+
+State 149
+
+   31 instSelec: IF_ APAR_ expre CPAR_ inst ELSE_ • inst
+
+    APAR_    shift, and go to state 43
+    MAS_     shift, and go to state 44
+    MENOS_   shift, and go to state 45
+    CTE_     shift, and go to state 46
+    ID_      shift, and go to state 47
+    PUNCOM_  shift, and go to state 48
+    ALLA_    shift, and go to state 49
+    READ_    shift, and go to state 51
+    PRINT_   shift, and go to state 52
+    IF_      shift, and go to state 53
+    WHILE_   shift, and go to state 54
+    TRUE_    shift, and go to state 55
+    FALSE_   shift, and go to state 56
+    NOT_     shift, and go to state 57
+    INC_     shift, and go to state 58
+    DEC_     shift, and go to state 59
+
+    inst        go to state 150
+    instExpre   go to state 61
+    instEntSal  go to state 62
+    instSelec   go to state 63
+    instIter    go to state 64
+    expre       go to state 65
+    expreLogic  go to state 66
+    expreIgual  go to state 67
+    expreRel    go to state 68
+    expreAd     go to state 69
+    expreMul    go to state 70
+    expreUna    go to state 71
+    expreSufi   go to state 72
+    const       go to state 73
+    opUna       go to state 74
+    opIncre     go to state 75
+
+
+State 150
+
+   31 instSelec: IF_ APAR_ expre CPAR_ inst ELSE_ inst •
+
+    $default  reduce using rule 31 (instSelec)
