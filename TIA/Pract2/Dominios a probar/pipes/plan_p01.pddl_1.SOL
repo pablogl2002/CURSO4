@@ -1,0 +1,19 @@
+
+; Version LPG-td-1.4
+; Seed 123422162
+; Command line: /home/pegi/LPG-td-1.4/lpg-td -o ./Dominios a probar/pipes/domain.pddl -f ./Dominios a probar/pipes/p01.pddl -n 1 
+; Problem ./Dominios a probar/pipes
+; Time 0.01
+; Search time 0.00
+; Parsing time 0.01
+; Mutex time 0.00
+; MakeSpan 6.00
+
+
+0.0003:   (POP-UNITARYPIPE S13 B1 A1 A3 B5 LCO OCA1 TA1-1-OCA1 TA3-1-LCO) [2.0000]
+2.0005:   (PUSH-UNITARYPIPE S12 B5 A1 A2 B4 OCA1 LCO TA1-1-OCA1 TA2-1-LCO) [2.0000]
+4.0007:   (PUSH-UNITARYPIPE S12 B0 A1 A2 B5 OC1B OCA1 TA1-1-OC1B TA2-1-OCA1) [2.0000]
+2.0005:   (PUSH-UNITARYPIPE S13 B2 A1 A3 B1 GASOLEO LCO TA1-1-GASOLEO TA3-1-LCO) [2.0000]
+4.0007:   (PUSH-UNITARYPIPE S13 B3 A1 A3 B2 RAT-A GASOLEO TA1-1-RAT-A TA3-1-GASOLEO) [2.0000]
+
+
