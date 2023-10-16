@@ -21,7 +21,7 @@ letra           [a-zA-Z]
 delimitador     [ \t\n]+
 digito          [0-9]
 entero          {digito}+
-id              [a-zA-Z][a-zA-Z0-9]*
+id              [a-zA-Z][_a-zA-Z0-9]*
 cte             {entero}|{digito}*"."{digito}+|{digito}+"."{digito}*
 comentario      \/\/.*\n
 
