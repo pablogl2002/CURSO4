@@ -20,6 +20,7 @@
         almF - lugar
     )
     (:init
+    
         ;distancias desde el almacen A a otros almacenes
         (=(distancia almA almA) 0)
         (=(distancia almA almB) 16)
@@ -103,6 +104,13 @@
         (at almE dronP1)
         (at almD dronP2)
 
+        ; decimos que al principio no tienen ningún paquete los drones
+        (sin-paquetes dronL1)
+        (sin-paquetes dronL2)
+        (sin-paquetes dronL3)
+        (sin-paquetes dronP1)
+        (sin-paquetes dronP2)
+
         ; carga maxima de la bateria de los drones
         (=(carga-maxima dronL1) 100)
         (=(carga-maxima dronL2) 100)
@@ -142,11 +150,17 @@
     )
 
 (:goal (and
-     (at almB dronL1)
-     (at almB dronL2)
-     (at almB dronL3)
-     (at almE dronP1)
-     (at almE dronP2)
+    (at almC paqueteL1)
+    (at almB paqueteL2)
+    (at almD paqueteL3)
+    (at almF paqueteP1)
+    (at almE paqueteP2)
+
+    (at almB dronL1)
+    (at almB dronL2)
+    (at almB dronL3)
+    (at almE dronP1)
+    (at almE dronP2)
 ))
 
 
