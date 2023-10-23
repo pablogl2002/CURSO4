@@ -20,7 +20,7 @@
         almF - lugar
     )
     (:init
-    
+
         ;distancias desde el almacen A a otros almacenes
         (=(distancia almA almA) 0)
         (=(distancia almA almB) 16)
@@ -147,20 +147,26 @@
         (=(coste-recarga dronP1) 12)
 
         (=(coste-recargas) 0)
+
+        (cargador-libre almA)
+        (cargador-libre almB)
+        (cargador-libre almC)
+        (cargador-libre almF)
+
     )
 
 (:goal (and
-    (at almC paqueteL1)
-    (at almB paqueteL2)
-    (at almD paqueteL3)
-    (at almF paqueteP1)
-    (at almE paqueteP2)
-
     (at almB dronL1)
     (at almB dronL2)
     (at almB dronL3)
     (at almE dronP1)
     (at almE dronP2)
+
+    (at almC paqueteL1)
+    (at almB paqueteL2)
+    (at almD paqueteL3)
+    (at almF paqueteP1)
+    (at almE paqueteP2)
 ))
 
 
