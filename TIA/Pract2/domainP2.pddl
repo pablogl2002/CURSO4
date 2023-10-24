@@ -35,12 +35,10 @@
         (over all (and
             (at ?ini ?p)
             (at ?ini ?d)
-            (sin-paquetes ?d)
         ))
         (at end (and
             (at ?ini ?p)
             (at ?ini ?d)
-            (sin-paquetes ?d)
         ))
     )
     :effect (and 
@@ -66,12 +64,10 @@
         (over all (and
             (at ?ini ?p)
             (at ?ini ?d)
-            (sin-paquetes ?d)
         ))
         (at end (and
             (at ?ini ?p)
             (at ?ini ?d)
-            (sin-paquetes ?d)
         ))
     )
     :effect (and 
@@ -90,19 +86,17 @@
     :duration (= ?duration (tiempo-entrega ?d))
     :condition (and
         (at start (and
-            (not(sin-paquetes ?d))
+            (not (sin-paquetes ?d))
             (at ?fin ?d)
             (in ?d ?p)
         ))
         (over all (and
-            (not(sin-paquetes ?d))
+            (not (sin-paquetes ?d))
             (at ?fin ?d)
-            (in ?d ?p)
         ))
         (at end (and
             (not(sin-paquetes ?d))
             (at ?fin ?d)
-            (in ?d ?p)
         ))
     )
     
@@ -180,13 +174,11 @@
         (over all (and 
             (at ?l ?d)
             (punto-recarga ?l)
-            (cargador-libre ?l)
             (sin-paquetes ?d)
         ))
         (at end (and 
             (at ?l ?d)
             (punto-recarga ?l)
-            (cargador-libre ?l)
             (sin-paquetes ?d)
         ))
     )
