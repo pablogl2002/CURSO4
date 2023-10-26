@@ -137,14 +137,14 @@
         (=(duracion-recarga dronL2) 9)
         (=(duracion-recarga dronL3) 10)
         (=(duracion-recarga dronP1) 20)
-        (=(duracion-recarga dronP1) 25)
+        (=(duracion-recarga dronP2) 25)
 
         ; coste recarga bateria de cada dron
         (=(coste-recarga dronL1) 8)
         (=(coste-recarga dronL2) 10)
         (=(coste-recarga dronL3) 8)
         (=(coste-recarga dronP1) 9)
-        (=(coste-recarga dronP1) 12)
+        (=(coste-recarga dronP2) 12)
 
         (=(coste-recargas) 0)
 

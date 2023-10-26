@@ -25,7 +25,7 @@
 
 (:durative-action recoger_ligero
     :parameters (?ini - lugar ?p - paqueteL ?d - (either dronL dronP))
-    :duration (= ?duration (tiempo-recogida ?d))
+    :duration (= ?duration (tiempo-recogida ?p))
     :condition (and 
         (at start (at ?ini ?p))
         (at start (at ?ini ?d))
@@ -44,7 +44,7 @@
 
 (:durative-action recoger_pesado
     :parameters (?ini - lugar ?p - paqueteP ?d - dronP)
-    :duration (= ?duration (tiempo-recogida ?d))
+    :duration (= ?duration (tiempo-recogida ?p))
     :condition (and 
         (at start (at ?ini ?p))
         (at start (at ?ini ?d))
@@ -63,7 +63,7 @@
 
 (:durative-action entregar
     :parameters (?fin - lugar ?p - (either paqueteL paqueteP) ?d - (either dronL dronP))
-    :duration (= ?duration (tiempo-entrega ?d))
+    :duration (= ?duration (tiempo-entrega))
     :condition (and
         (at start (not (sin-paquetes ?d)))
         (at start (at ?fin ?d))
