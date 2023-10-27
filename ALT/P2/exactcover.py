@@ -1,5 +1,5 @@
 # AUTORES:
-# (poner aquí el nombre o 2 nombres del equipo de prácticas
+# Pablo García López
 
 def exact_cover(listaConjuntos, U=None):
 
@@ -11,7 +11,19 @@ def exact_cover(listaConjuntos, U=None):
         # COMPLETAR
         # consulta los métodos isdisjoint y union de la clase set,
         # podrías necesitarlos
-        
+        if len(sol) == len(listaConjuntos):
+            if len(cjtAcumulado) == len(U):
+                yield sol.copy()
+        else:
+            cjt = listaConjuntos[len(sol)]
+            if cjtAcumulado.isdisjoint(cjt):
+                sol.append(cjt)
+                yield from backtracking(sol, cjtAcumulado.union(cjt))
+                sol.pop()
+            sol.append({})
+            yield from backtracking(sol, cjtAcumulado)
+            sol.pop()
+
     yield from backtracking([], set())
 
 if __name__ == "__main__":
