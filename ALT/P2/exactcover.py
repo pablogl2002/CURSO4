@@ -1,6 +1,7 @@
 # AUTORES:
 # Pablo García López
 
+
 def exact_cover(listaConjuntos, U=None):
 
     # permitimos que nos pasen U, si no lo hacen lo calculamos:
@@ -13,14 +14,14 @@ def exact_cover(listaConjuntos, U=None):
         # podrías necesitarlos
         if len(sol) == len(listaConjuntos):
             if len(cjtAcumulado) == len(U):
-                yield sol.copy()
+                yield [l for l in sol if l != 0] 
         else:
             cjt = listaConjuntos[len(sol)]
             if cjtAcumulado.isdisjoint(cjt):
                 sol.append(cjt)
                 yield from backtracking(sol, cjtAcumulado.union(cjt))
                 sol.pop()
-            sol.append({})
+            sol.append(0)
             yield from backtracking(sol, cjtAcumulado)
             sol.pop()
 

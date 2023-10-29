@@ -15,6 +15,14 @@ def langford_data_structure(N):
     # crear la lista de conjuntos que resuelva la
     # secuencia de Langford con exact_cover
     # COMPLETAR
+
+    listaConjuntos = []
+    for i in range(1, N+1):
+        for j in range(1, 2*N-i):
+            listaConjuntos.append({position(j-1), position(j+i), value(i)})
+    
+    return listaConjuntos
+
     # return U
 
 def langford_exact_cover(N):
