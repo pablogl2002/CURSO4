@@ -3,7 +3,7 @@ import sys
 from exactcover import exact_cover
 
 # AUTORES:
-# (poner aquí el nombre o 2 nombres del equipo de prácticas
+# Pablo García López
 
 def langford_data_structure(N):
     # n1,n2,... means that the value has been used
