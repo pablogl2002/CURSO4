@@ -1,0 +1,163 @@
+Nombre: Pablo García López
+
+1)
+	Peso 3.5 Humedad 7.5
+	-Temperatura(mom): 44
+	-Duracion(mom): 45
+	
+	Peso 5 Humedad 20
+	-Temperatura(mom): 55
+	-Duracion(mom): 56
+	
+	Peso 6 Humedad 45
+	-Temperatura(mom): 77
+	-Duracion(mom): 88
+	
+2) 
+
+	En el template de temperatura se añaden vapor y supervapor con sus respectivos rangos
+	
+(deftemplate temperatura 20 110 Celsius
+    ((baja (30 1)(50 0))
+    (media (30 0)(50 1)(60 1)(80 0))
+    (alta (60 0)(80 1))
+    (vapor (s 80 105))
+    (supervapor (pi 10 100))
+    )
+)
+	
+	En la regla que utilizo para leer por consola, he tenido que añadir 
+	
+(defrule leer-datos
+    (initial-fact)
+=>
+    (printout t "Introduzca el peso en kg" crlf)
+    (bind ?pesoAux (read))
+    (printout t "Introduzca la humedad en %" crlf)
+    (bind ?humedadAux (read))
+    ; nuevo
+    (printout t "Introduzca el modo a actuar (EST o HIEST)" crlf)
+    (bind ?modoAux (read))
+    ;aserto en secado el valor del modo 
+    (assert (secado (peso-crisp ?pesoAux)(humedad-crisp ?humedadAux) (modo ?modoAux)))
+    ; comparo el tipo de modo y hago la correspondiente fuzzificacion
+    (if (= ?modoAux EST)
+        then (fuzzify temperatura 100 0)
+    )
+    (if (= ?modoAux HIEST)
+        then (fuzzify temperatura 110 0)
+    )
+    (fuzzify peso ?pesoAux 0)
+    (fuzzify humedad ?humedadAux 0)
+)
+	
+	He realizado las siguientes ampliaciones para la velocidad:
+	
+(deftemplate velocidad 0 1000 rpm
+    ((baja (300 1) (400 0))
+    (media (400 0)(500 1)(700 1)(800 0))
+    (alta (700 0)(800 1)))
+)	
+
+(defrule velocidad-bajo-more-or-less
+    (peso bajo)
+    (temperatura more-or-less vapor)
+=>
+    (assert (velocidad alta))
+)
+
+(defrule velocidad-medio-vapor
+    (peso medio)
+    (temperatura vapor)
+=>
+    (assert (velocidad media))
+)
+
+(defrule velocidad-alto-supervapor
+    (peso medio)
+    (temperatura supervapor)
+=>
+    (assert (velocidad media))
+)
+
+	b) 
+		Peso: 3.5 Humedad: 7.5 Modo: 0 (EST)
+		-velocidad(mom) = 741
+
+		Peso: 5 Humedad: 20 Modo: 0 (EST)
+		-velocidad(mom) = 600
+		
+		Peso: 5 Humedad: 20 Modo: 1 (HIEST)
+		-velocidad(mom) = 600
+		
+		Peso: 9 Humedad: 50 Modo: 1 (HIEST)
+		-velocidad(mom) = 600
+		
+	c)
+		Peso: 3.5 Humedad: 7.5 Modo: 0 (EST)
+		-velocidad(mom) = 844
+
+		Peso: 5 Humedad: 20 Modo: 0 (EST)
+		-velocidad(mom) = 847
+		
+		Peso: 5 Humedad: 20 Modo: 1 (HIEST)
+		-velocidad(mom) = 847
+		
+		Peso: 9 Humedad: 50 Modo: 1 (HIEST)
+		-velocidad(mom) = 826	
+		
+3)
+	a) añado en leer-datos la opcion de pulsar el boton, y guardo su valor en un slot eco del template secado
+	
+	además, añado esta regla para assertar los valores correspondientes:
+
+(defrule eco-on
+    ?f <- (eco ?v)
+=>
+    if (= ?v 1)
+        then(
+            (assert(duracion-secado larga))
+            (assert(temperatura media))
+            (assert(velocidad somewhat baja))
+        )
+)
+				
+	b)
+		Peso: 3.5 Humedad: 7.5 Modo: 0 (EST) ECO: 1 (ON)
+		-temperatura(mom) = 44
+		-duracion(mom) = 45
+		-velocidad(mom) = 844
+
+		Peso: 5 Humedad: 20 Modo: 0 (EST) ECO: 1 (ON)
+		-temperatura(mom) = 55
+		-duracion(mom) = 56
+		-velocidad(mom) = 847
+		
+		Peso: 5 Humedad: 20 Modo: 1 (HIEST) ECO: 0 (OFF)
+		-temperatura(mom) = 55
+		-duracion(mom) = 56
+		-velocidad(mom) = 847
+		
+		Peso: 9 Humedad: 50 Modo: 1 (HIEST) ECO: 1 (ON)
+		-temperatura(mom) = 90
+		-duracion(mom) = 101
+		-velocidad(mom) = 826	
+		
+4)
+
+	He añadido esta regla en la que si la velocidad es very alta lanza un mensaje por consola
+
+(defrule velocidad-very-alta
+    (velocidad very alta)
+=>
+    (printout T "posibles arrugas debido a la velocidad")
+)
+
+		
+		
+		
+		
+		
+		
+		
+

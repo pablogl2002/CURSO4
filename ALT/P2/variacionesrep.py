@@ -29,8 +29,6 @@ def permutaciones(elementos):
                     yield from backtracking(sol)
                     sol.pop()
 
-        
-
     yield from backtracking([])
 
 def combinaciones(elementos, cantidad):

@@ -1,14 +1,14 @@
 
 ; Version LPG-td-1.4
-; Seed 58403506
+; Seed 105633022
 ; Command line: /home/pegi/LPG-td-1.4/lpg-td -o Ddrones.pddl -f Pdrones.pddl -quality 
 ; Problem Pdrones.pddl
-; Time 0.02
+; Time 0.01
 ; Plan generation time 0.00
 ; Search time 0.00
-; Parsing time 0.01
+; Parsing time 0.00
 ; Mutex time 0.00
-; MetricValue 95.60
+; MetricValue 99.20
 
 
 
