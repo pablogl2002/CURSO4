@@ -1,5 +1,5 @@
 # leer secuencias y almacenar como tabla
-secuencias <- read.table(file = "/home/pegi/COSAS/repos/CURSO4/BIO/P5/ejercicio1/sequences.txt")
+secuencias <- read.table(file = "sequences.txt")
 
 rows = nrow(secuencias) # número de filas
 columns = ncol(secuencias) # número de columnas
