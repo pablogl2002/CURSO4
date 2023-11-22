@@ -37,5 +37,7 @@ if __name__ == "__main__":
                       {"perro", "boli"},
                       {"coche","moto"},
                       {"casa"}]
+    
+    print(exact_cover(listaConjuntos))    
     for solucion in exact_cover(listaConjuntos):
         print(solucion)
