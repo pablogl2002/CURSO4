@@ -50,14 +50,15 @@ def voraz_x_instante(costMatrix):
     M = costMatrix.shape[0] # nº piezas
 
     # C
-    solution = []
+    solution = [None] * M
     ocupadas = set()
 
-    for j in range(M):
-        _, min_fila = min((costMatrix[i,j],j) for i in range(M) if i not in ocupadas)
-        solution.append(min_fila)
-        ocupadas.add(min_fila)
 
+    score = 0
+    for j in range(M):
+        _, min_fila = min((costMatrix[i,j],i) for i in range(M) if i not in ocupadas)
+        solution[min_fila] = j
+        ocupadas.add(min_fila)
     score = compute_score(costMatrix, solution)
     
     return score, solution
