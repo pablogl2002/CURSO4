@@ -41,7 +41,7 @@ getwd()
 Otherwise, we set it (change the example directory to ours):
 
 ```{r eval=FALSE}
-setwd("/home/pegi/COSAS/repos/CURSO4/BIO/P8")
+setwd("C:/Users/pablo/Desktop/COSAS/repos/CURSO4/BIO/P8")
 ```
 
 We install the required libraries and then load them into the working environment.
@@ -159,7 +159,8 @@ completenessByColumn
 Next, we will calculate and display the overall percentage of missing data:
 
 ```{r }
-completenessByDataset = ##TODO##
+completenessByDataset = 100 - round(mean(completenessByColumn), 2)
+completenessByDataset
 ```
 
 ***
@@ -188,8 +189,10 @@ Once the function is loaded in the environment, we can easily apply it to the ba
 
 ```{r }
 resCompletenessByColumn = apply.monthly(
-  ##TODO##
+  ##TODO
+  zooRepository, dimCompletenessByColumn
   )
+resCompletenessByColumn
 ```
 
 Now, we can create a plot with the results using the **plotly** library (Create Interactive Web Graphics via 'plotly.js'). First for each variable:
@@ -221,16 +224,25 @@ p
 And secondly globally, being able to calculate the result from the variable __resCompletenessByColumn__ and use the code to plot a single series from the previous code chunk:
 
 ```{r}
-##TODO##
-
 p <-
   plot_ly(
     x = index(resCompletenessByColumn),
-    ##TODO##
+    y = resCompletenessByColumn[, 1],
+    name = names(resCompletenessByColumn)[1],
+    type = 'scatter',
+    mode = 'lines'
   ) %>%
   plotly::layout(
-    ##TODO##
+    title = 'Completeness by month',
+    xaxis = list(title = "Date"),
+    yaxis = list (title = "Completeness (%)")
   )
+
+for (i in 2:ncol(resCompletenessByColumn)) {
+  p = p %>% plotly::add_trace(y = resCompletenessByColumn[, i],
+    name = names(resCompletenessByColumn)[i],
+    mode = 'lines')
+}
 
 p
 ```
