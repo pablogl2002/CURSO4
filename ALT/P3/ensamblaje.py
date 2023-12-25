@@ -1,3 +1,5 @@
+# Nombres: Jorge Baeza García y Pablo García López
+
 import numpy as np
 import heapq
 import collections
@@ -53,7 +55,6 @@ def voraz_x_instante(costMatrix):
     solution = [None] * M
     ocupadas = set()
 
-
     score = 0
     for j in range(M):
         _, min_fila = min((costMatrix[i,j],i) for i in range(M) if i not in ocupadas)
@@ -66,19 +67,34 @@ def voraz_x_instante(costMatrix):
 def voraz_x_coste(costMatrix):
     # costMatrix[i,j] el coste de situar pieza i en instante j
     M = costMatrix.shape[0] # nº piezas
-    # COMPLETAR
     solution = []
-    score = 0
+    coordenadas = [(costMatrix[i, j], i, j) for i in range(M) for j in range(M)]
+    coordenadas.sort()
 
+    solution = [-1] * M
+    piezas_usadas = set()
+    instantes_usados = set()
+
+    for coord in coordenadas:
+        coste, pieza, instante = coord
+        if pieza not in piezas_usadas and instante not in instantes_usados:
+            solution[pieza] = instante
+            piezas_usadas.add(pieza)
+            instantes_usados.add(instante)
     score = compute_score(costMatrix, solution)
-    return score,solution
+    return score, solution
 
 def voraz_combina(costMatrix):
-    solution = []
-    score = 0
-   
-    # COMPLETAR
-    
+    score_pieza, solution_pieza = voraz_x_pieza(costMatrix)
+    score_instante, solution_instante = voraz_x_instante(costMatrix)
+    score_coste, solution_coste = voraz_x_coste(costMatrix)
+
+    solutions = [(score_pieza, solution_pieza),
+                 (score_instante, solution_instante),
+                 (score_coste, solution_coste)]
+
+    # Elige la mejor solución en términos de puntuación
+    score, solution = min(solutions, key=lambda x: x[0])
     return score,solution
         
 ######################################################################
@@ -109,7 +125,7 @@ class Ensamblaje:
         if initial_sol is None:
             self.fx = np.inf
         else:
-            self.fx = compute_score(costMatrix,initial_sol)
+            self.fx = compute_score(costMatrix, initial_sol)
         
     def branch(self, s_score, s):
         '''
@@ -213,6 +229,7 @@ def comparar_algoritmos(root_seed, low, high):
             cM = genera_instancia(talla, low=low, high=high, seed=seed)
             for label,function in cjtAlgoritmos.items():
                 score,solution = function(cM)
+
                 dtalla[label] += score
 
         print(f'{talla:>5}',end=' ')
@@ -221,10 +238,48 @@ def comparar_algoritmos(root_seed, low, high):
             print(f'{media:10.2f}', end=' ')
         print()
 
+
+
+cjtAlgoritmosRyP = {'naif+Ryp': naive_solution,
+                 'x_pieza+Ryp': voraz_x_pieza,
+                 'x_instante+Ryp': voraz_x_instante,
+                 'x_coste+Ryp': voraz_x_coste,
+                 'combina+Ryp': voraz_combina,
+                 'RyP': functionRyP}
+
 def comparar_sol_inicial(root_seed, low, high):
     # COMPLETAR
+    print('talla',end=' ')
+    for label in cjtAlgoritmosRyP:
+        print(f'{label:>15}',end=' ')
+    print()
+    numInstancias = 10
+    for talla in range(5,15+1):
+        dtalla = collections.defaultdict(float)
+
+        np.random.seed(root_seed)
+        seeds = np.random.randint(low=0, high=9999, size=numInstancias)
+
+        for seed in seeds:
+            cM = genera_instancia(talla, low=low, high=high, seed=seed)
+            for label,function in cjtAlgoritmosRyP.items():
+                score,solution = function(cM)
+                #print(f'function: {label:15} solution: {solution}')
+                if label != 'RyP':
+                    e = Ensamblaje(cM, solution)
+                    #print(solution)
+                    score, x, stats = e.solve()
+                    #print(f'function: {label:15} score: {score:3} solution: {x} ')
+                dtalla[label] += stats['iterations']
+
+        print(f'{talla:>5}',end=' ')
+        for label in cjtAlgoritmosRyP:
+            media = dtalla[label]/numInstancias
+            print(f'{media:15.2f}', end=' ')
+        print()
     pass
-    
+
+
 def probar_ryp():
     ejemplo = np.array([[7, 3, 7, 2],
                         [9, 9, 4, 1],
