@@ -248,7 +248,7 @@ cjtAlgoritmosRyP = {'naif+Ryp': naive_solution,
                  'RyP': functionRyP}
 
 def comparar_sol_inicial(root_seed, low, high):
-    # COMPLETAR
+    # C
     print('talla',end=' ')
     for label in cjtAlgoritmosRyP:
         print(f'{label:>15}',end=' ')
@@ -263,13 +263,10 @@ def comparar_sol_inicial(root_seed, low, high):
         for seed in seeds:
             cM = genera_instancia(talla, low=low, high=high, seed=seed)
             for label,function in cjtAlgoritmosRyP.items():
-                score,solution = function(cM)
-                #print(f'function: {label:15} solution: {solution}')
+                _,solution = function(cM)
                 if label != 'RyP':
                     e = Ensamblaje(cM, solution)
-                    #print(solution)
-                    score, x, stats = e.solve()
-                    #print(f'function: {label:15} score: {score:3} solution: {x} ')
+                    _, _, stats = e.solve()
                 dtalla[label] += stats['iterations']
 
         print(f'{talla:>5}',end=' ')
@@ -277,7 +274,6 @@ def comparar_sol_inicial(root_seed, low, high):
             media = dtalla[label]/numInstancias
             print(f'{media:15.2f}', end=' ')
         print()
-    pass
 
 
 def probar_ryp():
