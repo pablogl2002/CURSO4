@@ -189,6 +189,9 @@ def functionRyP(costMatrix):
     fx,x,stats = e.solve()
     return fx,x
 
+def noSol(costMatrix):
+    return np.inf, None
+
 ######################################################################
 #
 #                        EXPERIMENTACIÓN
@@ -245,35 +248,40 @@ cjtAlgoritmosRyP = {'naif+Ryp': naive_solution,
                  'x_instante+Ryp': voraz_x_instante,
                  'x_coste+Ryp': voraz_x_coste,
                  'combina+Ryp': voraz_combina,
-                 'RyP': functionRyP}
+                 'RyP': noSol}
+
 
 def comparar_sol_inicial(root_seed, low, high):
     # C
-    print('talla',end=' ')
-    for label in cjtAlgoritmosRyP:
-        print(f'{label:>15}',end=' ')
-    print()
-    numInstancias = 10
-    for talla in range(5,15+1):
-        dtalla = collections.defaultdict(float)
-
-        np.random.seed(root_seed)
-        seeds = np.random.randint(low=0, high=9999, size=numInstancias)
-
-        for seed in seeds:
-            cM = genera_instancia(talla, low=low, high=high, seed=seed)
-            for label,function in cjtAlgoritmosRyP.items():
-                _,solution = function(cM)
-                if label != 'RyP':
-                    e = Ensamblaje(cM, solution)
-                    _, _, stats = e.solve()
-                dtalla[label] += stats['iterations']
-
-        print(f'{talla:>5}',end=' ')
+    for stat in ['iterations', 'gen_states', 'podas_opt', 'maxA']:
+        print(f'-------------------------------------------- {stat:10} ---------------------------------------------')
+        print('talla',end=' ')
         for label in cjtAlgoritmosRyP:
-            media = dtalla[label]/numInstancias
-            print(f'{media:15.2f}', end=' ')
+            print(f'{label:>15}',end=' ')
         print()
+        numInstancias = 10
+        for talla in range(5,15+1):
+            dtalla = collections.defaultdict(float)
+
+            np.random.seed(root_seed)
+            seeds = np.random.randint(low=0, high=9999, size=numInstancias)
+
+            for seed in seeds:
+                cM = genera_instancia(talla, low=low, high=high, seed=seed)
+                for label,function in cjtAlgoritmosRyP.items():
+                    _,solution = function(cM)
+                    if label != 'RyP':
+                        e = Ensamblaje(cM, solution)
+                    else:
+                        e = Ensamblaje(cM)
+                    _, _, stats = e.solve()
+                    dtalla[label] += stats[stat]
+
+            print(f'{talla:>5}',end=' ')
+            for label in cjtAlgoritmosRyP:
+                media = dtalla[label]/numInstancias
+                print(f'{media:15.2f}', end=' ')
+            print()
 
 
 def probar_ryp():

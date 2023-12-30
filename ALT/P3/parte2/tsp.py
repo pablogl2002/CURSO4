@@ -1,7 +1,7 @@
 ######################################################################
 # Práctica realizada por:
-# - COMPLETAR
-# -
+# - Pablo García López
+# - Jorge Baeza García
 ######################################################################
 
 import time
@@ -466,9 +466,25 @@ class TSP_Cota4(TSP):
     no visitado (más el último visitado). 
     Es fácil calcularla de manera incremental.
     '''
+    # C
 
-    pass
-    # COMPLETAR
+    def initial_solution(self):
+        initial = [ self.first_vertex ]
+        initial_score = sum(self.G.lowest_out_weight(vertice) for vertice in self.G.nodes())
+        return (initial_score, initial)
+
+    def branch(self, s_score, s):
+        '''
+        s_score es el score de s
+        s es una solución parcial
+        '''
+
+        lastvertex = s[-1]
+        s_score = s_score - self.G.lowest_out_weight(lastvertex)
+        for v,w in self.G.edges_from(lastvertex):
+            if v not in s:
+                yield (s_score + w, s+[v])
+    
 
 class TSP_Cota5(TSP):
     '''
@@ -477,9 +493,33 @@ class TSP_Cota5(TSP):
     y llegan a vértices no visitados o al vértice origen.
     No es incremental.
     '''
-    
-    pass
-    # COMPLETAR
+
+    # C
+    def __init__(self, graph, first_vertex=0):
+        super().__init__(graph, first_vertex)
+
+
+    def initial_solution(self):
+        initial = [ self.first_vertex ]
+        initial_score = sum(self.G.lowest_out_weight(vertice) for vertice in self.G.nodes())
+        return (initial_score, initial)
+
+    def branch(self, s_score, s):
+        '''
+        s_score es el score de s
+        s es una solución parcial
+        '''
+
+        no_visitados = self.G.nodes() - s;
+        s_score = self.G.path_weight(s)
+        lastvertex = s[-1]
+        for v,w in self.G.edges_from(lastvertex):
+            if v not in s:
+                visitados = s+[v]
+                coste = 0
+                for nv in no_visitados:
+                    coste += self.G.lowest_out_weight(nv, visitados[1:])
+                yield (s_score + coste + w, s+[v])
     
 
 class TSP_Cota6(TSP):
@@ -492,9 +532,30 @@ class TSP_Cota6(TSP):
     calcular en una sola pasada los caminos desde cada
     vértice al inicial.
     '''
-    
-    pass
-    # COMPLETAR
+
+    # C
+    def __init__(self, graph, first_vertex=0):
+        super().__init__(graph, first_vertex)
+        self.dist, _ = self.G.Dijkstra(first_vertex, reverse=True)
+
+    def initial_solution(self):
+        initial = [ self.first_vertex ]
+        initial_score = 0
+        return (initial_score, initial)
+
+    def branch(self, s_score, s):
+        '''
+        s_score es el score de s
+        s es una solución parcial
+        '''
+        lastvertex = s[-1]
+
+        Dpadre = self.dist[lastvertex]
+        #print(self.G.Dijkstra(lastvertex, reverse=True))
+
+        for v,w in self.G.edges_from(lastvertex):
+            if v not in s:
+                yield (s_score + w - Dpadre + self.dist[v], s+[v])
 
 class TSP_Cota7(TSP):
     '''
@@ -504,9 +565,24 @@ class TSP_Cota7(TSP):
     el primero y el último de la solución parcial).
     No admite sol. incremental.
     '''
-    
-    pass
-    # COMPLETAR
+    # C
+
+    def initial_solution(self):
+        initial = [ self.first_vertex ]
+        initial_score = 0
+        return (initial_score, initial)
+
+    def branch(self, s_score, s):
+        '''
+        s_score es el score de s
+        s es una solución parcial
+        '''
+        lastvertex = s[-1]
+
+        s_score = self.G.path_weight(s)
+        for v,w in self.G.edges_from(lastvertex):
+            if v not in s:
+                yield (s_score + w + self.G.Dijkstra1dst(v, self.first_vertex, avoid = s[1:]), s+[v])
 
 
 ######################################################################
@@ -547,15 +623,15 @@ class TSP_Cota7E(TSP_Cota7, BranchBoundExplicit):
 
 # ir descomentando a medida que se implementen las cotas
 repertorio_cotas = [('Cota1I',TSP_Cota1I),
-                    # ('Cota1E',TSP_Cota1E),
-                    # ('Cota4I',TSP_Cota4I),
-                    # ('Cota4E',TSP_Cota4E),
-                    # ('Cota5I',TSP_Cota5I),
-                    # ('Cota5E',TSP_Cota5E),
-                    # ('Cota6I',TSP_Cota6I),
-                    # ('Cota6E',TSP_Cota6E),
-                    # ('Cota7I',TSP_Cota7I),
-                    # ('Cota7E',TSP_Cota7E)
+                    ('Cota1E',TSP_Cota1E),
+                    ('Cota4I',TSP_Cota4I),
+                    ('Cota4E',TSP_Cota4E),
+                    ('Cota5I',TSP_Cota5I),
+                    ('Cota5E',TSP_Cota5E),
+                    ('Cota6I',TSP_Cota6I),
+                    ('Cota6E',TSP_Cota6E),
+                    ('Cota7I',TSP_Cota7I),
+                    ('Cota7E',TSP_Cota7E)
                     ]
 
 ######################################################################
@@ -619,6 +695,7 @@ def experimento():
     '''
 
     # COMPLETAR
+    
     pass
 
 
