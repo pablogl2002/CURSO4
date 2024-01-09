@@ -510,7 +510,7 @@ class TSP_Cota5(TSP):
         s es una solución parcial
         '''
 
-        no_visitados = self.G.nodes() - s;
+        no_visitados = self.G.nodes() - s
         s_score = self.G.path_weight(s)
         lastvertex = s[-1]
         for v,w in self.G.edges_from(lastvertex):
@@ -682,7 +682,7 @@ seeds = {
     19 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
     20 : [0, 1, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
 }
-                    
+
 def experimento():
     '''
     - Probar con varias tallas entre 10 y 20
@@ -694,9 +694,37 @@ def experimento():
     - Sacar los datos de manera que sea fácil realizar una interpretacion
     '''
 
-    # COMPLETAR
-    
-    pass
+    # C
+    stats_aux = collections.defaultdict(float)
+    root_seed = 42
+    numInstancias = 2
+
+    for talla in range(10,21):
+        np.random.seed(root_seed)
+        #seeds = np.random.randint(low=0, high=9999, size=numInstancias)
+        for seed in seeds:
+            graph = generate_random_digraph(talla, seed=seed)
+            for label, cota in repertorio_cotas:
+                aux = cota(graph)
+                fx, x, stats = aux.solve()
+                if x is not None and fx != float('inf'):
+                    for key, value in stats.items():
+                        stats_aux[talla, label, key] += value
+
+    for stat in stats.keys():
+        print(f'-------------------------------------------- {stat:10} ---------------------------------------------')
+        print('talla',end=' ')
+        for label,_ in repertorio_cotas:
+            print(f'{label:>12}',end=' ')
+        print()
+
+        for talla in range(10,21):
+            print(f'{talla:>5}',end=' ')
+            for label,_ in repertorio_cotas:
+                media = stats_aux[talla, label, stat]/numInstancias
+                print(f'{media:12.2f}', end=' ')
+            print()
+
 
 
 
@@ -743,7 +771,7 @@ def prueba_mini():
 ######################################################################
             
 if __name__ == '__main__':
-    prueba_mini()
+    # prueba_mini()
     # prueba_generador()
-    # experimento()
+    experimento()
 
