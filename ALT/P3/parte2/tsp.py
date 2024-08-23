@@ -771,7 +771,7 @@ def prueba_mini():
 ######################################################################
             
 if __name__ == '__main__':
-    # prueba_mini()
+    prueba_mini()
     # prueba_generador()
-    experimento()
+    # experimento()
 
